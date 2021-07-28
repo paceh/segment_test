@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const members = require("../../Members");
+const members = require("../../members");
 const uuid = require('uuid');
 const moment = require('moment');
 // SEGMENT
-const analytics = require('../../Segment.js');
+const analytics = require('../../segment.js');
 // SEGMENT
 
 router.get('/', (req, res) => {
@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
     // // Check if found is true
     found
     ? res.json(members.filter(member => member.id === parseInt(req.params.id)))
-    : res.status(400).send(`No member exists with id ${req.params.id}`);
+    : res.status(400).json({msg: `No member exists with id ${req.params.id}`});
 });
 
 // Create member
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
     }
 
     if(!newMember.name || !newMember.email) {
-        return res.status(400).send('Must include both name and email in request body')
+        return res.status(400).json({msg: 'Must include both name and email in request body'})
     }
 
     // SEGMENT
@@ -87,11 +87,11 @@ router.put('/:id', (req, res) => {
                 });
                 // SEGMENT
 
-                res.send(`Member ${member.name} updated`);
+                res.json({msg: `Member ${member.name} updated`});
             }
         });
     } else {
-        res.status(400).send(`No member exists with id ${req.params.id}`);
+        res.status(400).json({msg: `No member exists with id ${req.params.id}`});
     }
 });
 
@@ -118,7 +118,7 @@ router.delete('/:id', (req, res) => {
             members: members.filter(member => member.id !== parseInt(req.params.id))
         });
     } else {
-        res.status(400).send(`No member exists with id ${req.params.id}`);
+        res.status(400).json({msg: `No member exists with id ${req.params.id}`});
     }
 });
 

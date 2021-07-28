@@ -2,9 +2,10 @@ const express = require("express");
 const path = require("path");
 const exphbs = require('express-handlebars');
 const logger = require('./middleware/logger');
-const members = require('./Members');
-const analytics = require('./Segment.js');
+const members = require('./members');
+const analytics = require('./segment.js');
 const moment = require('moment');
+
 
 // Init express and port
 const app = express();
