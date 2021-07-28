@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
     
     // SEGMENT
     analytics.track({
-        anonymousId: '48d213bb-95c3-4f8d-af97-86b2b404dcfe',
+        userId: req.params.id,
         event: 'Member Found',
         properties: {
           id: req.params.id
@@ -46,8 +46,18 @@ router.post('/', (req, res) => {
     }
 
     // SEGMENT
+    analytics.identify({
+        userId: newMember.id,
+        traits: {
+            id: newMember.id,
+            name: newMember.name,
+            email: newMember.email,
+            status: newMember.status
+        }
+      });
+
     analytics.track({
-        anonymousId: '48d213bb-95c3-4f8d-af97-86b2b404dcfe',
+        userId: newMember.id,
         event: 'Member Created',
         properties: {
           id: newMember.id,
@@ -77,7 +87,7 @@ router.put('/:id', (req, res) => {
 
                 // SEGMENT
                 analytics.track({
-                    anonymousId: '48d213bb-95c3-4f8d-af97-86b2b404dcfe',
+                    userId: req.params.id,
                     event: 'Member Updated',
                     properties: {
                       id: req.params.id,
@@ -105,7 +115,7 @@ router.delete('/:id', (req, res) => {
 
         // SEGMENT
         analytics.track({
-            anonymousId: '48d213bb-95c3-4f8d-af97-86b2b404dcfe',
+            userId: req.params.id,
             event: 'Member Deleted',
             properties: {
               id: req.params.id

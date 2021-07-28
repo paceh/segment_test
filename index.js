@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
     // SEGMENT
 
     res.render('index', {
-        title: 'Member App',
+        title: 'Members App',
         members: members
     })
 });
